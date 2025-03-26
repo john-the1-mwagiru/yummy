@@ -35,7 +35,7 @@ class RecipeModel:
         ),
         Recipe(
             id=2,
-            name="",
+            name="Chicken broth",
             ingredients=[
                 "2 tablespoons butter",
                 "1 tablespoon minced parsley",

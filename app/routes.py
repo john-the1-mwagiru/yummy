@@ -1,7 +1,7 @@
 import re
 from flask import flash, request, render_template, url_for, redirect, session
 from app import app
-from app.database import users, category
+from app.database import users, category,recipe
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
@@ -83,3 +83,13 @@ def categories():
             return render_template("categories.html", user_category=user_category)
     else:
         return redirect(url_for("index"))
+
+@app.route("/categories/<int:id>")
+def single_category(id):
+    acategory = category.CategoryModel.get(id)
+    all_recipes = recipe.RecipeModel.get_all()
+    user_recipes= [recipe for recipe in all_recipes if recipe.user_id==acategory.user_id]
+
+    return render_template("category.html", acategory=acategory,user_recipes=user_recipes)
+
+
