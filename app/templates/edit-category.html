@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Log into Yummy Recipes</title>
+</head>
+
+<body>
+    <div class="row vh-100">
+        <img src="{{ url_for('static', filename='pancakes.jpg') }}" alt="login-image"
+            class="col-sm p-0 object-fit-cover overflow-hidden">
+        <div class="col-sm m-auto">
+            <h2 class="mb-3 mb-md-5 mt-2 mt-md-0 text-center">Edit Category</h2>
+            <form class="d-flex flex-column px-2 px-lg-5 mx-lg-5 m-auto" action="#" method="post">
+                <div class="mb-2">
+                    <label for="text" class="form-label">Name</label>
+                    <input type="text" name="category-name" value="{{acategory.name}}" class="form-control w-100">
+                </div>
+                <div class="mb-2">
+                    <label for="text" class="form-label">Description</label>
+                    <input type="text" name="category-description" value="{{acategory.description}}"
+                        class="form-control w-100">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 p-3 text-center mb-2">
+                    Save
+                </button>
+
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
