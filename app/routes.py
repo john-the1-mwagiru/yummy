@@ -109,3 +109,19 @@ def edit_category(id):
         updated_category = category.CategoryModel.update(id, acategory)
         return redirect(url_for("categories"))
     return render_template("edit-category.html", acategory=acategory)
+
+@app.route("/categories/create", methods=["POST", "GET"])
+def create_category():
+    if request.method == "POST" and "username" in session:
+        username = session["username"]
+        all_users = users.UserModel.get_all()
+        categories = category.CategoryModel.get_all()
+        category_name = request.form["category-name"]
+        category_description = request.form["category-description"]
+        active_user = [logged_user for logged_user in all_users if logged_user.email == username]
+        for a_user in active_user:
+            new_category = category.Category(id=None,name=category_name,description=category_description,user_id=a_user.user_id)
+            category.CategoryModel.create(new_category)
+            return redirect(url_for("categories"))
+    return render_template("create-category.html")
+
