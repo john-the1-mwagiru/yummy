@@ -21,7 +21,8 @@
                 <div class="row-sm mb-2 ms-1">
                     <span class="badge text-bg-primary"><a class="text-white link-underline link-underline-opacity-0"
                             href="{{url_for('edit_category',id=acategory.id)}}">Edit</a></span>
-                    <span class="badge text-bg-danger">Delete</span>
+                    <span class="badge text-bg-danger"><a class="text-white link-underline link-underline-opacity-0"
+                            href="{{url_for('delete_category',id=acategory.id)}}">Delete</a></span>
                     <span class="badge text-bg-success"><a class="text-white link-underline link-underline-opacity-0"
                             href="{{url_for('create_category')}}">New Category</span>
                 </div>
