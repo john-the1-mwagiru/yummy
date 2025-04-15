@@ -138,3 +138,21 @@ def create_category():
 def delete_category(id):
     category.CategoryModel.delete(id)
     return render_template("delete-category.html")
+
+@app.route("/recipes")
+def view_recipes():
+    if "username" in session:
+        username = session["username"]
+        all = users.UserModel.get_all()
+        recipes = recipe.RecipeModel.get_all()
+        user = [logged_user for logged_user in all if logged_user.email == username]
+
+        for a_user in user:
+            user_recipes = [
+                recipe
+                for recipe in recipes
+                if recipe.user_id == a_user.user_id
+            ]
+            return render_template("recipes.html", user_recipes=user_recipes)
+    else:
+        return redirect(url_for("index"))
