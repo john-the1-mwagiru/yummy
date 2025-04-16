@@ -18,7 +18,7 @@
             <ol class="list-group-numbered">
                 {%for recipe in user_recipes%}
                 <li class="list-group-item mb-2"><span class="fw-medium">Recipe:</span>
-                    <a href="#">
+                    <a href="{{url_for('view_recipe',id=recipe.id)}}">
                         <p>{{recipe.name}}</p>
                     </a>
                     {%endfor%}

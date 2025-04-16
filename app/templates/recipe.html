@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Recipe</title>
+</head>
+
+<body>
+    <div class="row vh-100">
+        <img src="{{ url_for('static', filename='pancakes.jpg') }}" alt="login-image"
+            class="col-sm p-0 object-fit-cover overflow-hidden">
+        <div class="col-sm m-auto">
+            <h2 class="mb-3 mb-md-5 mt-2 mt-md-0 text-center">User Recipe</h2>
+            <p class="fs-5 mx-1">{{single_recipe.name}}</p>
+            <p class="fs-5 mx-1">Ingredients</p>
+            <ol class="list-group list-group-numbered mx-1">
+                {%for ingredients in single_recipe.ingredients%}
+                <li class="list-group-item text-muted">{{ingredients}}</li>
+                {%endfor%}
+            </ol>
+            <p class="fs-5 mx-1">Directions</p>
+            {% for steps, items in single_recipe.directions.items() %}
+            <p class="mx-1">{{ steps }}</p>
+            <p class="text-muted mx-1">{{items}}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
