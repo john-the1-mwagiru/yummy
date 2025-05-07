@@ -1,5 +1,5 @@
 import re
-from flask import flash, request, render_template, url_for, redirect, session
+from flask import flash, request, render_template, url_for, redirect, session, jsonify
 from app import app
 from app.database import users, category, recipe
 
@@ -161,3 +161,37 @@ def view_recipes():
 def view_recipe(id):
     single_recipe = recipe.RecipeModel.get(id)
     return render_template("recipe.html", single_recipe=single_recipe)
+
+
+@app.route("/recipes/create", methods=["POST", "GET"])
+def create_recipe():
+    results = {}
+    if request.method == "POST" and "username" in session:
+        username = session["username"]
+        all_users = users.UserModel.get_all()
+        categories = recipe.RecipeModel.get_all()
+        recipe_name = request.form["recipe-name"]
+        recipe_ingredients = request.form.get("recipe-ingredients", "")
+        ingredient_items = [
+            item.strip() for item in recipe_ingredients.split(",") if item.strip()
+        ]
+        recipe_directions = request.form.get("recipe-directions", "")
+        pairs = [pair.strip() for pair in recipe_directions.split(",") if ":" in pair]
+        directions_data = {
+            step.strip(): direction.strip()
+            for step, direction in (pair.split(":", 1) for pair in pairs)
+        }
+        active_user = [
+            logged_user for logged_user in all_users if logged_user.email == username
+        ]
+        for a_user in active_user:
+            new_recipe = recipe.Recipe(
+                id=None,
+                name=recipe_name,
+                ingredients=ingredient_items,
+                directions=directions_data,
+                user_id=a_user.user_id,
+            )
+            recipe.RecipeModel.create(new_recipe)
+            return redirect(url_for("view_recipes"))
+    return render_template("create-recipe.html")
